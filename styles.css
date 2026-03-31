@@ -1,0 +1,224 @@
+/* ── Dreamcatcher: base token mapping ───────────────────────────────────────
+   All colours resolve through Obsidian's built-in CSS variables so dark and
+   light themes are handled automatically.  Canvas-specific tokens keep their
+   atmospheric look but are softened in light mode via the overrides below.
+   ─────────────────────────────────────────────────────────────────────────── */
+.dreamcatcher-modal {
+  /* map to Obsidian native tokens */
+  --dc-text:       var(--text-normal);
+  --dc-muted:      var(--text-muted);
+  --dc-faint:      var(--text-faint);
+  --dc-line:       var(--background-modifier-border);
+  --dc-accent:     var(--interactive-accent);
+  --dc-bg-btn:     var(--background-modifier-border);
+  --dc-bg-input:   var(--background-modifier-form-field, var(--background-secondary));
+
+  /* canvas atmosphere — deep night by default (dark mode) */
+  --dc-canvas-0:   #06101a;
+  --dc-canvas-1:   #10243b;
+  --dc-hud-bg:     rgba(6, 9, 16, 0.72);
+  --dc-hud-text:   rgba(245, 247, 255, 0.9);
+  --dc-pointer-highlight: rgba(255, 255, 255, 0.16);
+
+  color: var(--dc-text);
+}
+
+/* ── Light-mode canvas overrides ────────────────────────────────────────── */
+.theme-light .dreamcatcher-modal {
+  --dc-canvas-0:   #c8daf5;
+  --dc-canvas-1:   #a8c0e8;
+  --dc-hud-bg:     rgba(210, 226, 248, 0.88);
+  --dc-hud-text:   rgba(10, 24, 46, 0.88);
+  --dc-pointer-highlight: rgba(30, 60, 120, 0.14);
+}
+
+/* ── Layout ─────────────────────────────────────────────────────────────── */
+.dreamcatcher-shell {
+  display: grid;
+  gap: 14px;
+}
+
+.dreamcatcher-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.dreamcatcher-title {
+  margin: 0;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 1rem;
+  color: var(--dc-text);
+}
+
+.dreamcatcher-status {
+  color: var(--dc-muted);
+  font-size: 0.84rem;
+}
+
+/* ── Capture field (interactive canvas) ─────────────────────────────────── */
+.dreamcatcher-field {
+  position: relative;
+  width: 100%;
+  min-height: 260px;
+  border: 1px solid var(--dc-line);
+  border-radius: 18px;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      circle at var(--pointer-x, 50%) var(--pointer-y, 50%),
+      var(--dc-pointer-highlight),
+      transparent 28%
+    ),
+    linear-gradient(148deg, var(--dc-canvas-0), var(--dc-canvas-1));
+  touch-action: none;
+  cursor: crosshair;
+}
+
+.dreamcatcher-core {
+  position: absolute;
+  width: 88px;
+  height: 88px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(var(--core-scale, 1));
+  border-radius: 50%;
+  border: 2px solid color-mix(in srgb, var(--tone, #7bd6ff) 56%, white);
+  box-shadow:
+    0 0 0 6px color-mix(in srgb, var(--tone, #7bd6ff) 18%, transparent),
+    0 0 32px color-mix(in srgb, var(--tone, #7bd6ff) 38%, transparent);
+  transition: transform 110ms linear;
+}
+
+/* ── HUD overlay (sits inside the canvas) ───────────────────────────────── */
+.dreamcatcher-hud {
+  position: absolute;
+  inset: auto 10px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 9px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(128, 128, 128, 0.22);
+  background: var(--dc-hud-bg);
+  color: var(--dc-hud-text);
+  font-size: 0.78rem;
+}
+
+/* ── Anchor strip ───────────────────────────────────────────────────────── */
+.dreamcatcher-anchor {
+  display: grid;
+  gap: 8px;
+}
+
+.dreamcatcher-anchor input {
+  width: 100%;
+  background: var(--dc-bg-input);
+  color: var(--dc-text);
+  border: 1px solid var(--dc-line);
+  border-radius: 6px;
+  padding: 6px 8px;
+}
+
+.dreamcatcher-anchor input::placeholder {
+  color: var(--dc-faint);
+}
+
+.dreamcatcher-anchor input:focus {
+  outline: 2px solid var(--dc-accent);
+  outline-offset: 2px;
+}
+
+/* ── Suggestion chips ───────────────────────────────────────────────────── */
+.dreamcatcher-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.dreamcatcher-suggestions button {
+  border: 1px solid var(--dc-line);
+  border-radius: 999px;
+  background: var(--background-secondary);
+  color: var(--dc-text);
+  padding: 4px 10px;
+  font-size: 0.74rem;
+  cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease;
+}
+
+.dreamcatcher-suggestions button:hover {
+  background: var(--background-modifier-hover, var(--background-modifier-border));
+  border-color: var(--dc-accent);
+}
+
+.dreamcatcher-suggestions button:focus-visible {
+  outline: 2px solid var(--dc-accent);
+  outline-offset: 2px;
+}
+
+/* ── Save action button ─────────────────────────────────────────────────── */
+.dreamcatcher-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.dreamcatcher-actions button {
+  border: 1px solid var(--dc-accent);
+  border-radius: 6px;
+  background: var(--interactive-accent);
+  color: var(--text-on-accent, #fff);
+  padding: 7px 14px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: filter 120ms ease, opacity 120ms ease;
+}
+
+.dreamcatcher-actions button:hover:not(:disabled) {
+  filter: brightness(1.1);
+}
+
+.dreamcatcher-actions button:focus-visible {
+  outline: 2px solid var(--dc-accent);
+  outline-offset: 2px;
+}
+
+.dreamcatcher-actions button:disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+}
+
+/* ── Recent dreams history ──────────────────────────────────────────────── */
+.dreamcatcher-history {
+  border-top: 1px solid var(--dc-line);
+  padding-top: 10px;
+  display: grid;
+  gap: 6px;
+}
+
+.dreamcatcher-history strong {
+  color: var(--dc-text);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.dreamcatcher-history-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--dc-muted);
+  font-size: 0.78rem;
+}
+
+.dreamcatcher-swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 1px solid rgba(128, 128, 128, 0.28);
+}
