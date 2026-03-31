@@ -64,7 +64,7 @@ The repository also includes a GitHub Actions workflow at `.github/workflows/rel
 
 1. Install the BRAT plugin in Obsidian.
 2. In BRAT, choose "Add a beta plugin".
-3. Enter this repository URL.
+3. Enter this repository URL: `https://github.com/woodmurderedhat/dreamcatcher-plugin`
 4. BRAT installs and updates Dreamcatcher from this repo using the prebuilt plugin files.
 
 ## Usage
