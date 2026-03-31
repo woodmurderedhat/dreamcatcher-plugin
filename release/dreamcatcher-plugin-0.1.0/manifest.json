@@ -1,0 +1,10 @@
+{
+  "id": "dreamcatcher-plugin",
+  "name": "Dreamcatcher",
+  "version": "0.1.0",
+  "minAppVersion": "1.5.0",
+  "description": "Capture dreams through color gestures and save them as notes.",
+  "author": "betty",
+  "authorUrl": "",
+  "isDesktopOnly": false
+}
